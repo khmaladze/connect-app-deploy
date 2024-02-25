@@ -1,0 +1,40 @@
+{
+  "name": "connect",
+  "version": "1.0.0",
+  "description": "connect app. best app. A Node.js/Express.js TypeScript application",
+  "main": "server.js",
+  "scripts": {
+    "start": "node backend/src/server.js",
+    "dev": "nodemon backend/src/server.js",
+    "prettier": "npx prettier --write .",
+    "test": "jest",
+    "deploy": "npm install && cd frontend && npm install && npm run build"
+  },
+  "author": "Giorgi khmaladze",
+  "license": "ISC",
+  "dependencies": {
+    "@mui/styles": "^5.15.5",
+    "@mui/system": "^5.15.5",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.2",
+    "cloudinary": "^1.40.0",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-mongo-sanitize": "^2.2.0",
+    "express-rate-limit": "^7.1.5",
+    "helmet": "^7.1.0",
+    "hpp": "^0.2.3",
+    "joi": "^17.9.2",
+    "jsonwebtoken": "^9.0.1",
+    "mongoose": "^7.4.4",
+    "multer": "^1.4.5-lts.1",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.0",
+    "winston": "^3.10.0",
+    "ts-node-dev": "^2.0.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "nodemon": "^3.0.1"
+  }
+}
