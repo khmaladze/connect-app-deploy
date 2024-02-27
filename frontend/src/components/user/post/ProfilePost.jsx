@@ -112,7 +112,7 @@ const ProfilePost = React.memo(
         const response = await apiRequest(
           apiRequestType.post,
           true,
-          `${API_URL.post.post.delete_post_comment + "/" + postId}`,
+          `${API_URL.post.post.delete_post_comment + postId}`,
           token
         );
         if (response?.success) {
