@@ -1,11 +1,12 @@
 {
   "name": "connect",
   "version": "1.0.0",
-  "description": "connect app. best app. A Node.js/Express.js TypeScript application",
+  "description": "connect app. A Node.js/Express.js TypeScript application",
   "main": "server.js",
   "scripts": {
     "start": "node backend/src/server.js",
     "dev": "nodemon backend/src/server.js",
+    "setup": "npm i && cd frontend && npm install",
     "prettier": "npx prettier --write .",
     "test": "jest",
     "deploy": "npm install && cd frontend && npm install && npm run build"
