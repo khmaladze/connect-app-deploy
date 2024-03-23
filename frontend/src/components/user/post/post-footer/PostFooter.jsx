@@ -16,13 +16,14 @@ const PostFooterComponent = ({
   toggleComment,
   userAlreadyComment,
   gender,
+  isLiked,
 }) => {
   return (
     <Fragment>
       <PostFooter borderColor={list}>
         <div>
           {/* Profile post footer like component */}
-          <PostFooterLike token={token} postId={postId} />
+          <PostFooterLike token={token} postId={postId} isLiked={isLiked} />
           <div style={{ width: "10px" }}></div>
 
           {/* Profile post footer comment component */}
