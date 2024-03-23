@@ -31,13 +31,18 @@ const ProfilePost = React.memo(
     profilePosts,
     setProfilePosts,
     postedUserId,
+    isLiked,
+    isComment,
   }) => {
-    const [commentsData, setCommentsData] = useState([]);
+    const [commentsData, setCommentsData] = useState(isComment);
     const [isOpenCommentField, setIsOpenCommentField] = useState(false);
     const [commentText, setCommentText] = useState("");
-    const [isCommentDataFetched, setIsCommentDataFetched] = useState(false);
-    const [userAlreadyComment, setIsUserAlreadyComment] = useState(false);
-
+    const [isCommentDataFetched, setIsCommentDataFetched] = useState(
+      isComment.length >= 0 ? true : false
+    );
+    const [userAlreadyComment, setIsUserAlreadyComment] = useState(
+      isComment.length > 0 ? true : false
+    );
     const toggleComment = useCallback(() => {
       if (!userAlreadyComment) {
         setIsOpenCommentField(!isOpenCommentField);
@@ -165,6 +170,7 @@ const ProfilePost = React.memo(
             userAlreadyComment={userAlreadyComment}
             handleCommentSubmit={handleCommentSubmit}
             toggleComment={toggleComment}
+            isLiked={isLiked}
           />
           {commentsData &&
             commentsData.map((comment) => (
