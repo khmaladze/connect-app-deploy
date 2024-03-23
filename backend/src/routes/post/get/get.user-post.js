@@ -5,15 +5,22 @@ const { Post } = require("../../../models/post/post-model");
 const {
   customServerError,
 } = require("../../../function/server-custom-error-response");
-const { CustomRequest } = require("../../../middleware/user-authorization");
 const { custom_server_response } = require("../../../function/server-response");
 const { User } = require("../../../models/user/user-model");
+const { PostLike } = require("../../../models/post/post-like-model");
 
 // Route message constants
 const routeMessage = {
   success: "User friends posts fetched successfully",
   noPostsFound: "No posts found for user friends",
   error: "Error fetching user friends posts",
+};
+
+// Define friend list types
+const friendListTypes = {
+  Friend: ["Friend"],
+  CloseFriend: ["Friend", "CloseFriend"],
+  Favorite: ["Friend", "CloseFriend", "Favorite"],
 };
 
 /**
@@ -59,10 +66,29 @@ const businessLogic = async (req, res) => {
       return custom_server_response(res, 404, routeMessage.noPostsFound);
     }
 
-    // Extract friend IDs with posts
-    const friendIdsWithPosts = userFriend.friends
-      .filter((friend) => friend.user_id !== userId && friend.user_id !== null)
-      .map((friend) => friend.user_id);
+    // Initialize an empty array to store friend IDs with posts
+    let friendIdsWithPosts = [];
+
+    // Iterate through friend lists and add corresponding friend IDs
+    for (const [listType, allowedLists] of Object.entries(friendListTypes)) {
+      if (
+        userFriend.friends.some((friend) =>
+          allowedLists.includes(friend.friend_list)
+        )
+      ) {
+        friendIdsWithPosts = [
+          ...friendIdsWithPosts,
+          ...userFriend.friends
+            .filter(
+              (friend) =>
+                allowedLists.includes(friend.friend_list) &&
+                friend.user_id !== userId &&
+                friend.user_id !== null
+            )
+            .map((friend) => friend.user_id),
+        ];
+      }
+    }
 
     // Get posts of user's friends with author information
     const posts = await Post.find({
@@ -83,18 +109,32 @@ const businessLogic = async (req, res) => {
     const users = await User.find({ _id: { $in: authorIds } });
 
     // Add user information to each post object
-    const postsWithUserInfo = posts.map((post) => {
-      const user = users.find((u) => u._id.equals(post.author));
-      return {
-        ...post.toObject(), // Convert Mongoose document to plain JavaScript object
-        user: {
-          profileImage: user.profileImage,
-          firstname: user.firstname,
-          lastname: user.lastname,
-          gender: user.gender,
-        },
-      };
-    });
+    const postsWithUserInfo = await Promise.all(
+      posts.map(async (post) => {
+        // Find user corresponding to the post author
+        const user = users.find((u) => u._id.equals(post.author));
+
+        // Check if the like exists for the specified post and user
+        const isLikeExists = await PostLike.exists({
+          post_id: post._id,
+          like_author_id: req.user._id,
+        }).catch((error) => {
+          console.error("Error checking like for post:", error);
+          return false; // Set like existence to false in case of error
+        });
+
+        return {
+          ...post.toObject(), // Convert Mongoose document to plain JavaScript object
+          liked: isLikeExists ? true : false,
+          user: {
+            profileImage: user.profileImage,
+            firstname: user.firstname,
+            lastname: user.lastname,
+            gender: user.gender,
+          },
+        };
+      })
+    );
 
     const sorted = sortPostsByList(postsWithUserInfo);
 
