@@ -82,6 +82,8 @@ const ProfilePostComponent = ({ user, data }) => {
                   token={user.token}
                   profilePosts={profilePosts}
                   setProfilePosts={setProfilePosts}
+                  isComment={item.comments}
+                  isLiked={item.liked}
                 />
               </div>
             );
@@ -104,6 +106,8 @@ const ProfilePostComponent = ({ user, data }) => {
                   token={user.token}
                   profilePosts={profilePosts}
                   setProfilePosts={setProfilePosts}
+                  isComment={item.comments}
+                  isLiked={item.liked}
                 />
               </div>
             );
