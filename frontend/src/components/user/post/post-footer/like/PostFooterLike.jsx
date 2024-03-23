@@ -4,16 +4,13 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import { apiRequest, apiRequestType } from "../../../../../api/user/Api";
 import { API_URL } from "../../../../../config/config";
 
-const PostFooterLike = ({ token, postId }) => {
-  const [isLiked, setIsLiked] = useState(false);
-  const [count, setCount] = useState(0);
+const PostFooterLike = ({ token, postId, isLiked }) => {
+  const [like, setLike] = useState(isLiked);
+  const [checkLike, setCheckLike] = useState(false);
 
   const likePost = async () => {
     try {
-      setIsLiked(true);
-
-      window.location.pathname == "/profile" && setCount(count + 1);
-
+      setLike(true);
       const response = await apiRequest(
         apiRequestType.post,
         false,
@@ -24,7 +21,8 @@ const PostFooterLike = ({ token, postId }) => {
         }
       );
       if (response?.success) {
-        setIsLiked(true);
+        setLike(true);
+        setCheckLike(true);
       }
     } catch (error) {
       console.log(error);
@@ -41,8 +39,8 @@ const PostFooterLike = ({ token, postId }) => {
         { post_id: postId }
       );
       if (response?.success) {
-        setIsLiked(false);
-        window.location.pathname == "/profile" && setCount(count - 1);
+        setLike(false);
+        setCheckLike(true);
       }
     } catch (error) {
       console.log(error);
@@ -59,21 +57,23 @@ const PostFooterLike = ({ token, postId }) => {
           token
         );
         if (response?.success) {
-          setIsLiked(response.data.liked);
-          setCount(response.data.count);
+          setLike(response.data.liked);
         }
       } catch (error) {
         console.log(error);
       }
     };
     setTimeout(() => {
-      checkIsPostLiked();
+      if (checkLike) {
+        checkIsPostLiked();
+        setCheckLike(false);
+      }
     }, 1000);
-  }, [isLiked]);
+  }, [like]);
 
   return (
     <Fragment>
-      {isLiked && count ? (
+      {like ? (
         <div
           style={{
             height: "100%",
@@ -89,7 +89,6 @@ const PostFooterLike = ({ token, postId }) => {
               removePostLike();
             }}
           />
-          {window.location.pathname == "/profile" && <h4>{count}</h4>}
         </div>
       ) : (
         <FavoriteBorderIcon
