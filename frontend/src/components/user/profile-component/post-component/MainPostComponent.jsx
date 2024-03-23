@@ -77,6 +77,8 @@ const MainPostComponent = ({ user }) => {
             token={user.token}
             posts={posts}
             setPosts={setPosts}
+            isLiked={item.liked}
+            isComment={item.comments}
           />
         </div>
       ))}
