@@ -8,19 +8,13 @@ const {
 const { custom_server_response } = require("../../../function/server-response");
 const { User } = require("../../../models/user/user-model");
 const { PostLike } = require("../../../models/post/post-like-model");
+const CommentModel = require("../../../models/post/post-comment-model");
 
 // Route message constants
 const routeMessage = {
   success: "User friends posts fetched successfully",
   noPostsFound: "No posts found for user friends",
   error: "Error fetching user friends posts",
-};
-
-// Define friend list types
-const friendListTypes = {
-  Friend: ["Friend"],
-  CloseFriend: ["Friend", "CloseFriend"],
-  Favorite: ["Friend", "CloseFriend", "Favorite"],
 };
 
 /**
@@ -66,29 +60,10 @@ const businessLogic = async (req, res) => {
       return custom_server_response(res, 404, routeMessage.noPostsFound);
     }
 
-    // Initialize an empty array to store friend IDs with posts
-    let friendIdsWithPosts = [];
-
-    // Iterate through friend lists and add corresponding friend IDs
-    for (const [listType, allowedLists] of Object.entries(friendListTypes)) {
-      if (
-        userFriend.friends.some((friend) =>
-          allowedLists.includes(friend.friend_list)
-        )
-      ) {
-        friendIdsWithPosts = [
-          ...friendIdsWithPosts,
-          ...userFriend.friends
-            .filter(
-              (friend) =>
-                allowedLists.includes(friend.friend_list) &&
-                friend.user_id !== userId &&
-                friend.user_id !== null
-            )
-            .map((friend) => friend.user_id),
-        ];
-      }
-    }
+    // Extract friend IDs with posts
+    const friendIdsWithPosts = userFriend.friends
+      .filter((friend) => friend.user_id !== userId && friend.user_id !== null)
+      .map((friend) => friend.user_id);
 
     // Get posts of user's friends with author information
     const posts = await Post.find({
@@ -123,6 +98,24 @@ const businessLogic = async (req, res) => {
           return false; // Set like existence to false in case of error
         });
 
+        // Fetch comments for the post
+        const comments = await CommentModel.find({
+          post_id: post._id,
+          author_id: req.user._id,
+        });
+
+        // Fetch additional information about the users who posted each comment
+        const commentsWithUserInfo = await Promise.all(
+          comments.map(async (comment) => {
+            const commenter = await User.findOne({ _id: comment.author_id });
+            return {
+              ...comment.toObject(),
+              commenter_profileImage: commenter ? commenter.profileImage : "",
+              commenter_gender: commenter ? commenter.gender : "",
+            };
+          })
+        );
+
         return {
           ...post.toObject(), // Convert Mongoose document to plain JavaScript object
           liked: isLikeExists ? true : false,
@@ -132,6 +125,7 @@ const businessLogic = async (req, res) => {
             lastname: user.lastname,
             gender: user.gender,
           },
+          comments: commentsWithUserInfo, // Include comments in the post object
         };
       })
     );
