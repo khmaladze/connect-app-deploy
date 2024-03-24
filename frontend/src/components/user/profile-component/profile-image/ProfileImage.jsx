@@ -40,8 +40,8 @@ const ProfileImageComponent = ({ user, data }) => {
           if (
             response.data &&
             response.data.length > 0 &&
-            (response.data[0].list === "Favorite" ||
-              response.data[0].list === "CloseFriend" ||
+            // response.data[0].list === "Favorite" ||
+            (response.data[0].list === "CloseFriend" ||
               response.data[0].list === "Friend")
           ) {
             setIsStory(response.data[0].list);

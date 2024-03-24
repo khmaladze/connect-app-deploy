@@ -16,14 +16,13 @@ export const ProfileImage = styled.div`
         ? "#0500ff"
         : props.isStory === "CloseFriend"
         ? "#1eff1e"
-        : props.isStory === "Favorite"
-        ? "#FF008A"
-        : "white"};
+        : // : props.isStory === "Favorite"
+          // ? "#FF008A"
+          "white"};
   cursor: ${(props) =>
-    props.isStory === "Friend" ||
-    props.isStory === "CloseFriend" ||
-    props.isStory === "Favorite"
-      ? "pointer"
+    props.isStory === "Friend" || props.isStory === "CloseFriend"
+      ? //  || props.isStory === "Favorite"
+        "pointer"
       : "default"};
   display: flex;
   -webkit-box-pack: center;

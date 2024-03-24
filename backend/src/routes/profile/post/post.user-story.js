@@ -11,7 +11,11 @@ const Story = require("../../../models/story/story-model");
 
 const storySchema = Joi.object({
   text: Joi.string().max(500),
-  friendList: Joi.string().valid("Friend", "CloseFriend", "Favorite"),
+  friendList: Joi.string().valid(
+    "Friend",
+    "CloseFriend"
+    // "Favorite"
+  ),
 });
 
 const routeMessage = {

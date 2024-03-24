@@ -125,12 +125,12 @@ const About = () => {
         </StyledSubtitle>
 
         <StyledList>
-          <StyledListItem style={{ borderLeft: "5px solid rgb(255, 0, 138)" }}>
+          {/* <StyledListItem style={{ borderLeft: "5px solid rgb(255, 0, 138)" }}>
             <StyledListItemText
               primary="Pink Border:"
               secondary="Mark your posts and stories with a pink border to signify that it's a favorite. Highlight those special moments that hold a special place in your heart."
             />
-          </StyledListItem>
+          </StyledListItem> */}
           <StyledListItem style={{ borderLeft: "5px solid rgb(30, 255, 30)" }}>
             <StyledListItemText
               primary="Green Border:"

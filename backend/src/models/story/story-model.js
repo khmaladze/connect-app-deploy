@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const FriendList = {
   Friend: "Friend",
   CloseFriend: "CloseFriend",
-  Favorite: "Favorite",
+  // Favorite: "Favorite",
 };
 
 // Define the schema for the Story model

@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const FriendListType = {
   Friend: "Friend",
   CloseFriend: "CloseFriend",
-  Favorite: "Favorite",
+  // Favorite: "Favorite",
 };
 
 // Enum for friend request statuses

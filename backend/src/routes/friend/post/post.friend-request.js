@@ -10,7 +10,11 @@ const UserFriendAdd = require("../../../models/friend/friend-send-request");
 const sendFriendRequestSchema = Joi.object({
   receiver: Joi.string().trim().lowercase().required().min(2).max(200),
   friend_list: Joi.string()
-    .valid("Friend", "CloseFriend", "Favorite")
+    .valid(
+      "Friend",
+      "CloseFriend"
+      // "Favorite"
+    )
     .required(),
 });
 

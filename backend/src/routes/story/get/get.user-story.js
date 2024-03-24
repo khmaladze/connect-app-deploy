@@ -15,7 +15,11 @@ const routeMessage = {
 };
 
 function sortstorysByList(storys) {
-  const order = ["Favorite", "CloseFriend", "Friend"];
+  const order = [
+    // "Favorite",
+    "CloseFriend",
+    "Friend",
+  ];
 
   return storys.sort((a, b) => {
     const indexA = order.indexOf(a.list);

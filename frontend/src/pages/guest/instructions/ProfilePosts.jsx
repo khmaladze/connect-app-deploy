@@ -43,18 +43,18 @@ const ProfilePosts = () => {
       </Paper>
 
       {/* Title */}
-      <Typography variant="h4" align="center" gutterBottom>
+      {/* <Typography variant="h4" align="center" gutterBottom>
         Favorite
-      </Typography>
+      </Typography> */}
 
       {/* Image */}
-      <Paper elevation={3} style={{ width: "100%", marginBottom: "20px" }}>
+      {/* <Paper elevation={3} style={{ width: "100%", marginBottom: "20px" }}>
         <img
           src={favoriteImage}
           alt="Instructions"
           style={{ width: "100%", height: "100%", objectFit: "cover" }}
         />
-      </Paper>
+      </Paper> */}
 
       {/* Title */}
       <Typography variant="h4" align="center" gutterBottom>

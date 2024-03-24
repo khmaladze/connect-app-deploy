@@ -3,7 +3,11 @@ import { toast } from "react-toastify";
 import manImage from "../../images/man-profile.jpg";
 import girlImage from "../../images/girl-profile.jpg";
 
-export const friendListData = ["Friend", "CloseFriend", "Favorite"];
+export const friendListData = [
+  "Friend",
+  "CloseFriend",
+  // "Favorite"
+];
 
 // Constants for local storage keys related to user authentication
 export const userLocalstorage = {

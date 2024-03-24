@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const FriendListType = {
   Friend: "Friend",
   CloseFriend: "CloseFriend",
-  Favorite: "Favorite",
+  // Favorite: "Favorite",
 };
 
 // Define the structure of a friend entry in the user's friend list

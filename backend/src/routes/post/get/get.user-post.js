@@ -23,7 +23,11 @@ const routeMessage = {
  * @returns Sorted array of post objects.
  */
 function sortPostsByList(posts) {
-  const order = ["Favorite", "CloseFriend", "Friend"];
+  const order = [
+    // "Favorite",
+    "CloseFriend",
+    "Friend",
+  ];
 
   return posts.sort((a, b) => {
     const indexA = order.indexOf(a.list);

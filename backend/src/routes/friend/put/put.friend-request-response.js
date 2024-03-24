@@ -14,7 +14,11 @@ const responseFriendRequestSchema = Joi.object({
     .trim()
     .required()
     .max(200),
-  friend_list: Joi.string().valid("Friend", "CloseFriend", "Favorite"),
+  friend_list: Joi.string().valid(
+    "Friend",
+    "CloseFriend"
+    //  "Favorite"
+  ),
 });
 
 const routeMessage = {

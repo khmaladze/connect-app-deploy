@@ -16,7 +16,11 @@ const UpdateFriendButton = ({
   const updateFriendList = async (userId, previousStatus) => {
     if (
       status !== previousStatus &&
-      ["Friend", "CloseFriend", "Favorite"].includes(status)
+      [
+        "Friend",
+        "CloseFriend",
+        // "Favorite"
+      ].includes(status)
     ) {
       try {
         const response = await apiRequest(
