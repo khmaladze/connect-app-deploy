@@ -17,6 +17,22 @@ const routeMessages = {
   internal_server_error: "Internal Server Error.",
 };
 
+// Define a function to delete data
+const deleteStoryLikeCommentData = async (parameter) => {
+  try {
+    // Find and delete documents that match the parameter
+    const resultLike = await StoryLike.deleteMany(parameter);
+    const resultCommennt = await CommentModel.deleteMany(parameter);
+    if (!resultLike || !resultCommennt) {
+      console.log("No document found matching the parameter.");
+    } else {
+      console.log("Document deleted successfully:", resultLike, resultCommennt);
+    }
+  } catch (error) {
+    console.error("Error deleting document:", error);
+  }
+};
+
 const businessLogic = async (req, res) => {
   try {
     const storyId = req.params.storyId;
@@ -43,9 +59,13 @@ const businessLogic = async (req, res) => {
         mediaType
       );
     }
+    console.log("here");
 
-    await StoryLike.deleteMany({ story_id: storyId });
-    await CommentModel.deleteMany({ story_id: storyId });
+    // Define the parameter based on which you want to delete data
+    const parameter = { story_id: storyId };
+
+    // Call the function to delete data
+    await deleteStoryLikeCommentData(parameter);
 
     return custom_server_response(
       res,
