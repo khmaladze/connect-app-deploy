@@ -22,3 +22,56 @@ MONGODB=your_mongodb_connection_string
 CLOUDINARY_CLOUD_NAME=your_cloud_name
 CLOUDINARY_API_KEY=your_api_key
 CLOUDINARY_API_SECRET=your_api_secret
+
+## Getting Started
+
+1. Clone the repository:
+
+    ```bash
+    git clone https://github.com/khmaladze/connect-app-deploy.git
+    ```
+
+2. Navigate to the project directory and run the setup script:
+
+    ```bash
+    npm run setup
+    ```
+
+---
+
+## Scripts
+
+| Script       | Description                                                        |
+| ------------ | ------------------------------------------------------------------ |
+| **start**    | Starts the server in production mode.                              |
+| **dev**      | Starts the server in development mode with live reloading.         |
+| **setup**    | Installs backend and frontend dependencies.                        |
+| **prettier** | Runs Prettier to format code.                                      |
+| **test**     | Runs the test suite using Jest.                                    |
+| **deploy**   | Installs dependencies, builds the frontend, and prepares for deploy. |
+
+### Example Commands
+
+- Start the server in development mode:
+
+    ```bash
+    npm run dev
+    ```
+
+- Format code using Prettier:
+
+    ```bash
+    npm run prettier
+    ```
+
+- Run tests:
+
+    ```bash
+    npm run test
+    ```
+
+- Build the project for deployment:
+
+    ```bash
+    npm run deploy
+    ```
